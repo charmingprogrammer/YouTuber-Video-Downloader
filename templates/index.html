@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YouTube Video Downloader</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+  <div class="container text-center mt-5">
+    <h1 class="mb-4 text-light">🎬 YouTube Video Downloader</h1>
+    <form method="POST" action="/" class="mb-4">
+      <input type="text" name="url" class="form-control form-control-lg mb-3" placeholder="Paste YouTube video URL..." required>
+      <button class="btn btn-danger btn-lg w-100">Download Video</button>
+    </form>
+
+    {% if error %}
+      <div class="alert alert-danger">{{ error }}</div>
+    {% endif %}
+
+    {% if video_data %}
+      <div class="card bg-dark text-white p-3 shadow-lg">
+        <img src="{{ video_data.thumbnail }}" class="card-img-top rounded mb-3" style="max-height: 250px; object-fit: cover;">
+        <h5 class="card-title">{{ video_data.title }}</h5>
+        <p>👤 {{ video_data.author }} | 👁️ {{ video_data.views }} views | ⏱️ {{ video_data.length }}</p>
+        <a href="{{ url_for('download', filename=video_data.filename) }}" class="btn btn-success btn-lg mt-2">⬇️ Download Now</a>
+      </div>
+    {% endif %}
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
